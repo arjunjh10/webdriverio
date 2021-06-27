@@ -29,8 +29,11 @@ Given(/^I have launched the calendar$/, async function () {
 
 When(/^I calculate and remember the next friday from my current day$/, async function () {
     const date = new Date();
-    dayForTheNextFriday = utils.calculateTheNextDateForTheGivenDayOfTheWeek(date, DAYOFTHEWEEK.Friday); 
+    const dateOfTheNextFriday = utils.calculateTheNextDateForTheGivenDayOfTheWeek(date, DAYOFTHEWEEK.Friday);
+    dayForTheNextFriday = utils.getSimulatorCalendarDateString(dateOfTheNextFriday, DAYOFTHEWEEK.Friday); 
+    
     console.log(dayForTheNextFriday);
+    utils.calculateTheDateThreeMonthsFromTheGivenDate(dateOfTheNextFriday);
 });
 
 When(/^I open the events screen$/, async function () {

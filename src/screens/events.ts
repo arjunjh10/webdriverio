@@ -41,6 +41,10 @@ export default class EventsScreen extends AppScreen{
         return $('ios predicate string:label == "Repeat"');
     }
 
+    get datePickerNextMonthArrow(): Promise<WebdriverIO.Element> {
+        return $('ios predicate string:label == "Next Month"');
+    }
+
     async selectTime(timeValue: string, meridianValue: MERIDIANTIME) {
         const PMElement = await this.PM;
         const AMElement = await this.AM;
