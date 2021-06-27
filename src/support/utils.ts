@@ -8,17 +8,21 @@ export class Utils {
         return resultDate;
     }
 
-    getSimulatorCalendarDateString(date: Date, dayOfTheWeek: DAYOFTHEWEEK): string {
+    getSimulatorCalendarDateString(date: Date): string {
         const getDate = date.getDate();
         const getMonth = date.getMonth();
-        const dayOfTheWeekStringValue = DAYOFTHEWEEK[dayOfTheWeek];
-        const monthStringValue = MONTH[getMonth];
-
+        // let dayOfTheWeekStringValue: string;
+        // let monthStringValue: string;
+        
+            const getDay = date.getDay();
+           const dayOfTheWeekStringValue = DAYOFTHEWEEK[getDay];
+           const monthStringValue = MONTH[getMonth];
+        
         return `${dayOfTheWeekStringValue}, ${monthStringValue} ${getDate}`
     }
  
-    calculateTheDateThreeMonthsFromTheGivenDate(date: Date) {
-        const newDate = new Date(date.setMonth(date.getMonth() + 3));
+    calculateTheDateXNumberOfMonthsFromTheGivenDate(date: Date, numberOfMonths: number) {
+        const newDate = new Date(date.setMonth(date.getMonth() + numberOfMonths));
         return newDate;
     }
 }

@@ -1,25 +1,28 @@
-import { Given, When, Before } from '@cucumber/cucumber';
+import { Given, When, Before, World } from '@cucumber/cucumber';
 import CalendarScreen from '../screens/calendar';
-import { expect } from 'chai';
+import { expect, util } from 'chai';
 import EventsScreen from '../screens/events';
 import { Actions } from '../support/actions';
 import { Utils } from '../support/utils';
 import { DAYOFTHEWEEK, MERIDIANTIME } from '../support/constants';
 import CalendarDayView from '../screens/calendarDayView';
+import { ScenarioContext } from '../support/scenarioContext';
 
 let calendarScreen: CalendarScreen;
 let eventsScreen: EventsScreen;
 let calendarDayView: CalendarDayView;
 let actions: Actions;
 let utils: Utils;
-let dayForTheNextFriday: string;
+let scenarioContext: ScenarioContext;
 
-Before(async function() {
+
+Before(async function(this: World) {
     calendarScreen = new CalendarScreen();
     eventsScreen = new EventsScreen();
     actions = new Actions();
     utils = new Utils();
     calendarDayView = new CalendarDayView();
+    scenarioContext = new ScenarioContext(this);
 })
 
 Given(/^I have launched the calendar$/, async function () {
@@ -27,13 +30,13 @@ Given(/^I have launched the calendar$/, async function () {
     await calendarScreen.waitForIsShown(true);
 });
 
-When(/^I calculate and remember the next friday from my current day$/, async function () {
+When(/^I calculate and remember the next (.*) from my current day and (\d+) months from that date$/, async function (dayOfTheWeek: string, numberOfMonths: string) {
     const date = new Date();
-    const dateOfTheNextFriday = utils.calculateTheNextDateForTheGivenDayOfTheWeek(date, DAYOFTHEWEEK.Friday);
-    dayForTheNextFriday = utils.getSimulatorCalendarDateString(dateOfTheNextFriday, DAYOFTHEWEEK.Friday); 
+    const dateOfTheNextFriday = utils.calculateTheNextDateForTheGivenDayOfTheWeek(date, DAYOFTHEWEEK[dayOfTheWeek]);
     
-    console.log(dayForTheNextFriday);
-    utils.calculateTheDateThreeMonthsFromTheGivenDate(dateOfTheNextFriday);
+    scenarioContext.dayForTheNextFriday = utils.getSimulatorCalendarDateString(dateOfTheNextFriday); ;
+    const endDate = utils.calculateTheDateXNumberOfMonthsFromTheGivenDate(dateOfTheNextFriday, +numberOfMonths);
+    scenarioContext.dayForEndDate = utils.getSimulatorCalendarDateString(endDate);;
 });
 
 When(/^I open the events screen$/, async function () {
@@ -47,10 +50,10 @@ When(/^I open the events screen$/, async function () {
 
 
 When(/^I select the date for creating a recurring event$/, async function () {
-    const selectedDateElement = await $(`~${dayForTheNextFriday}`);
+    const selectedDateElement = await $(`~${scenarioContext.dayForTheNextFriday}`);
     await selectedDateElement.click();
     await calendarDayView.waitForIsShown(true);
-    expect(await selectedDateElement.getText()).to.equal(dayForTheNextFriday);
+    expect(await selectedDateElement.getText()).to.equal(scenarioContext.dayForTheNextFriday);
 
     const addEventButtonOnTheCalendarDayView = await calendarDayView.addButton;
     await addEventButtonOnTheCalendarDayView.click();
