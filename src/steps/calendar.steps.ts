@@ -1,14 +1,27 @@
-import { Given } from '@cucumber/cucumber';
+import { Given, When, Before } from '@cucumber/cucumber';
 import CalendarScreen from '../screens/calendar';
 import { expect } from 'chai';
 import EventsScreen from '../screens/events';
+import { Actions } from '../support/actions';
+import { Utils } from '../support/utils';
+import { DAYOFTHEWEEK } from '../support/constants';
 
-const calendarScreen = new CalendarScreen();
-const eventsScreen = new EventsScreen();
+let calendarScreen: CalendarScreen;
+let eventsScreen: EventsScreen;
+let actions: Actions;
+let utils: Utils;
+let dayForTheNextFriday:Date;
+
+Before(async function() {
+    calendarScreen = new CalendarScreen();
+    eventsScreen = new EventsScreen();
+    actions = new Actions();
+    utils = new Utils();
+})
+
 Given(/^I have launched the calendar$/, async function () {
-    await driver.launchApp();
-    // await driver.dismissAlert();
-    await driver.switchContext('NATIVE_APP');
+    await actions.launchApp();
+    await calendarScreen.waitForIsShown(true);
     const addButton = await calendarScreen.addButton;
     await addButton.click();
     
@@ -33,4 +46,10 @@ Given(/^I have launched the calendar$/, async function () {
     
     // const timePicketElements = await timePickerElement.findElements(timePickerElement.elementId)
     // await driver.findElement()
+});
+
+When(/^I calculate and remember the next friday from my current day$/, async function () {
+    const date = new Date();
+    dayForTheNextFriday = utils.calculateTheNextDateForTheGivenDayOfTheWeek(date, DAYOFTHEWEEK.Friday);
+  
 });

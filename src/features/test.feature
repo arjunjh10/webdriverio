@@ -5,3 +5,4 @@ Feature: Testing Calendar
 
     Scenario: Open Calendar
     Given I have launched the calendar
+    When I calculate and remember the next friday from my current day

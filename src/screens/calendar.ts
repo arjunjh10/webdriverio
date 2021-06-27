@@ -1,7 +1,7 @@
 import AppScreen from './appScreen';
 export default class CalendarScreen extends AppScreen{
     constructor() {
-        super('-ios predicate string:type == "XCUIElementTypeNavigationBar"');
+        super('~MonthViewContainerView');
     }
 
     get addButton(): Promise<WebdriverIO.Element> {
