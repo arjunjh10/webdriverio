@@ -22,3 +22,8 @@ export enum MONTH {
     November,
     December
 }
+
+export enum MERIDIANTIME {
+    AM,
+    PM
+}

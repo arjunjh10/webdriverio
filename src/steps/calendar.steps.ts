@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import EventsScreen from '../screens/events';
 import { Actions } from '../support/actions';
 import { Utils } from '../support/utils';
-import { DAYOFTHEWEEK } from '../support/constants';
+import { DAYOFTHEWEEK, MERIDIANTIME } from '../support/constants';
 import CalendarDayView from '../screens/calendarDayView';
 
 let calendarScreen: CalendarScreen;
@@ -67,25 +67,13 @@ When(/^I create a new event for the selected day for 3 months$/, async function 
 
     await startDatePicker.click();
 
-
-    const AMElement = await eventsScreen.AM;
-    const PMElement = await eventsScreen.PM;
-
-    const timePickerElement = await eventsScreen.eventTimePicker;
-    const timeTextField = await timePickerElement.$('-ios predicate string:type == "XCUIElementTypeTextField" AND name="Time"');
-    await timeTextField.click();
-    await timeTextField.setValue('09:30');
-    await AMElement.click();
+    await eventsScreen.selectTime('9:30', MERIDIANTIME.AM);
 
     // Close the start field
     await startDatePicker.click();
 
     await endDatePicker.click();
-    await timeTextField.click();
-    await timeTextField.setValue('01:30');
+    await eventsScreen.selectTime('1:30', MERIDIANTIME.PM);
 
-    const invalidTimeElement = await eventsScreen.invalidTimeElement;
-    await invalidTimeElement.isDisplayed() ? await PMElement.click() : await AMElement.click();
     await endDatePicker.click();
-    // await (await calendarScreen.addButton).click();
 });
