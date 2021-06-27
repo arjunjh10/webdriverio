@@ -1,7 +1,6 @@
-import { join } from "path";
-import { config } from "./wdio.conf";
+import { config as wdioConfig} from "./wdio.conf";
 
-config.capabilities = [
+wdioConfig.capabilities = [
     {
         // The defaults you need to have in your config
         platformName: 'iOS',
@@ -14,7 +13,7 @@ config.capabilities = [
         'appium:orientation': 'PORTRAIT',
         'appium:automationName': 'XCUITest',
         // The path to the app
-        'appium:app': join(process.cwd(), './apps/iOS-Simulator-NativeDemoApp-0.4.0.app.zip'),
+        'appium:app': 'com.apple.mobilecal',
         // Read the reset strategies very well, they differ per platform, see
         // http://appium.io/docs/en/writing-running-appium/other/reset-strategies/
         'appium:noReset': true,
@@ -22,7 +21,7 @@ config.capabilities = [
     },
 ];
 
-config.services = (config.services ? config.services : []).concat([
+wdioConfig.services = (wdioConfig.services ? wdioConfig.services : []).concat([
     [
         'appium',
         {
@@ -38,4 +37,4 @@ config.services = (config.services ? config.services : []).concat([
     ],
 ]);
 
-export default config;
+export const config = wdioConfig;

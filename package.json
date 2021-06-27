@@ -1,6 +1,14 @@
 {
+  "scripts": {
+    "test": "wdio ./config/ios.conf.ts"
+  },
   "dependencies": {
+    "@types/chai-as-promised": "^7.1.4",
+    "@wdio/appium-service": "^7.7.3",
     "@wdio/cli": "^7.7.4",
+    "@wdio/spec-reporter": "^7.7.3",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "path": "^0.12.7",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.9.0",
@@ -8,7 +16,9 @@
     "webdriverio": "^7.7.4"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.19",
     "@types/webdriverio": "^5.0.0",
-    "@wdio/cucumber-framework": "^7.7.3"
+    "@wdio/cucumber-framework": "^7.7.3",
+    "@wdio/local-runner": "^7.7.4"
   }
 }
