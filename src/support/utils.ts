@@ -1,5 +1,11 @@
 import { DAYOFTHEWEEK, MONTH } from "./constants";
 
+export interface DateInfoSimulator {
+    month: string;
+    date: number;
+    dayOfTheWeek: string;
+    year: number;
+}
 export class Utils {
     calculateTheNextDateForTheGivenDayOfTheWeek(date: Date, dayOfTheWeek: DAYOFTHEWEEK): Date {
         var resultDate = new Date(date.getTime());
@@ -8,21 +14,41 @@ export class Utils {
         return resultDate;
     }
 
-    getSimulatorCalendarDateString(date: Date): string {
+    getSimulatorCalendarDateString(date: Date): DateInfoSimulator {
         const getDate = date.getDate();
         const getMonth = date.getMonth();
-        // let dayOfTheWeekStringValue: string;
-        // let monthStringValue: string;
-        
-            const getDay = date.getDay();
-           const dayOfTheWeekStringValue = DAYOFTHEWEEK[getDay];
-           const monthStringValue = MONTH[getMonth];
-        
-        return `${dayOfTheWeekStringValue}, ${monthStringValue} ${getDate}`
+        const getDay = date.getDay();
+        const dayOfTheWeekStringValue = DAYOFTHEWEEK[getDay];
+        const monthStringValue = MONTH[getMonth];
+
+        const dateValue: DateInfoSimulator = {
+            month: monthStringValue,
+            date: getDate,
+            dayOfTheWeek: dayOfTheWeekStringValue,
+            year: date.getFullYear()
+        }
+
+        return dateValue;
+    }
+    
+    getCalendarDateString(dateObject: DateInfoSimulator): string {
+        return `${dateObject.dayOfTheWeek}, ${dateObject.month} ${dateObject.date}`
+    }
+
+    getCurrentYearForTheDate(date: Date): number {
+        return date.getFullYear();
     }
  
-    calculateTheDateXNumberOfMonthsFromTheGivenDate(date: Date, numberOfMonths: number) {
-        const newDate = new Date(date.setMonth(date.getMonth() + numberOfMonths));
+    calculateTheDateXNumberOfMonthsFromTheGivenDate(date: Date, numberOfMonths: number): Date {
+        let newDate = new Date(date);
+        newDate.setMonth(date.getMonth() + numberOfMonths);
+
+        // const dayNewDate = newDate.getDay();
+        // const currentDay = date.getDay();
+
+        // if(dayNewDate > currentDay) {
+        //     newDate.setDate(newDate.getDate() - (dayNewDate - currentDay));
+        // }
         return newDate;
     }
 }

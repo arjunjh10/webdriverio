@@ -27,3 +27,12 @@ export enum MERIDIANTIME {
     AM,
     PM
 }
+
+export enum FREQUENCY {
+    Never,
+    Daily,
+    Weekly,
+    BiWeekly,
+    Monthly,
+    Yearly
+}

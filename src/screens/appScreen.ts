@@ -1,4 +1,3 @@
-
 export default class AppScreen {
     private selector: string;
 
@@ -10,5 +9,9 @@ export default class AppScreen {
         return (await $(this.selector)).waitForDisplayed({
             reverse: !isShown,
         });
+    }
+
+    async navigateBack(): Promise<void> {
+        return await driver.back();
     }
 }
