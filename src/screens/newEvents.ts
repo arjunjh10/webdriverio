@@ -1,6 +1,6 @@
 import AppScreen from './application';
 import { MERIDIANTIME } from '../support/constants';
-export default class EventsScreen extends AppScreen {
+export default class NewEvents extends AppScreen {
   constructor() {
     super('-ios predicate string:type == "XCUIElementTypeNavigationBar" AND name="New Event"');
   }

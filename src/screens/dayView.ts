@@ -1,5 +1,5 @@
 import AppScreen from './application';
-export default class CalendarDayView extends AppScreen {
+export default class DayView extends AppScreen {
   constructor() {
     super('~DayViewContainerView');
   }

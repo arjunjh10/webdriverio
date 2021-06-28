@@ -1,21 +1,20 @@
 import { Given, When, Before, World, DataTable, Then } from '@cucumber/cucumber';
 import CalendarScreen from '../screens/calendar';
-import { expect, util } from 'chai';
-import EventsScreen from '../screens/events';
+import { expect } from 'chai';
 import { Actions } from '../support/actions';
 import { Utils, DateInfoSimulator } from '../support/utils';
 import { DAYOFTHEWEEK, FREQUENCY, MERIDIANTIME } from '../support/constants';
-import CalendarDayView from '../screens/calendarDayView';
 import { ScenarioContext } from '../support/scenarioContext';
 import { RepeatEvent } from '../screens/repeatEvent';
 import { EndRepeatEvent } from '../screens/endRepeatEvent';
 import { DatePicker } from '../screens/datePicker';
-import { TestExampleTable, EventAssertionTable } from '../support/cucumberTables';
-import AppScreen from '../screens/application';
+import { TestExampleTable } from '../support/cucumberTables';
+import DayView from '../screens/dayView';
+import NewEvents from '../screens/newEvents';
 
 let calendarScreen: CalendarScreen;
-let eventsScreen: EventsScreen;
-let calendarDayView: CalendarDayView;
+let eventsScreen: NewEvents;
+let dayView: DayView;
 let repeatEvent: RepeatEvent;
 let endRepeatEvent: EndRepeatEvent;
 let datePicker: DatePicker;
@@ -26,10 +25,10 @@ let scenarioContext: ScenarioContext;
 
 Before(function (this: World) {
   calendarScreen = new CalendarScreen();
-  eventsScreen = new EventsScreen();
+  eventsScreen = new NewEvents();
   actions = new Actions();
   utils = new Utils();
-  calendarDayView = new CalendarDayView();
+  dayView = new DayView();
   repeatEvent = new RepeatEvent();
   endRepeatEvent = new EndRepeatEvent();
   datePicker = new DatePicker();
@@ -62,10 +61,10 @@ When(/^I select the date for creating a recurring event$/, async function () {
   const dateText = utils.getCalendarDateString(nextFridayInfo);
   const selectedDateElement = await $(`~${dateText}`);
   await selectedDateElement.click();
-  await calendarDayView.waitForIsShown(true);
+  await dayView.waitForIsShown(true);
   expect(await selectedDateElement.getText()).to.equal(dateText);
 
-  const addEventButtonOnTheCalendarDayView = await calendarDayView.addButton;
+  const addEventButtonOnTheCalendarDayView = await dayView.addButton;
   await addEventButtonOnTheCalendarDayView.click();
   await eventsScreen.waitForIsShown(true);
 });
@@ -107,7 +106,7 @@ When(/^I create a new event with the following data:$/, async function (data: Da
   await endRepeatEvent.endRepeatEventOnDate(endDate);
   const addEventButton = await eventsScreen.addButton;
   await addEventButton.click();
-  await calendarDayView.waitForIsShown(true);
+  await dayView.waitForIsShown(true);
 });
 
 Then(/^A new event should be created successfully for:$/, async function (data: DataTable) {
@@ -132,6 +131,6 @@ Then(/^A new event should be created successfully for:$/, async function (data: 
     const fridayLabelElement = await $(`~${allFriDayDatesToBeCheckedForTheEvent[j]}`);
     expect(await fridayLabelElement.isDisplayed()).to.equal(true);
     expect(await eventElement.isDisplayed()).to.equal(true);
-    await calendarDayView.swipe({ x: 354, y: 132 }, { x: 39, y: 132 });
+    await dayView.swipe({ x: 354, y: 132 }, { x: 39, y: 132 });
   }
 });
