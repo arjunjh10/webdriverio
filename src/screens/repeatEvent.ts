@@ -44,6 +44,5 @@ export class RepeatEvent extends AppScreen {
             case FREQUENCY.Yearly:
                 return this.everyYear;
         }
-
     }
 }
