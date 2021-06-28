@@ -1,4 +1,4 @@
-import { DAYOFTHEWEEK, MONTH } from "./constants";
+import { DAYOFTHEWEEK, MONTH } from './constants';
 
 export interface DateInfoSimulator {
     month: string;
@@ -7,48 +7,42 @@ export interface DateInfoSimulator {
     year: number;
 }
 export class Utils {
-    calculateTheNextDateForTheGivenDayOfTheWeek(date: Date, dayOfTheWeek: DAYOFTHEWEEK): Date {
-        var resultDate = new Date(date.getTime());
-        resultDate.setDate(date.getDate() + (7 + dayOfTheWeek - date.getDay() - 1) % 7 +1);
+  calculateTheNextDateForTheGivenDayOfTheWeek(date: Date, dayOfTheWeek: DAYOFTHEWEEK): Date {
+    const resultDate = new Date(date.getTime());
+    resultDate.setDate(date.getDate() + (7 + dayOfTheWeek - date.getDay() - 1) % 7 + 1);
 
-        return resultDate;
-    }
+    return resultDate;
+  }
 
-    getSimulatorCalendarDateString(date: Date): DateInfoSimulator {
-        const getDate = date.getDate();
-        const getMonth = date.getMonth();
-        const getDay = date.getDay();
-        const dayOfTheWeekStringValue = DAYOFTHEWEEK[getDay];
-        const monthStringValue = MONTH[getMonth];
+  getSimulatorCalendarDateString(date: Date): DateInfoSimulator {
+    const getDate = date.getDate();
+    const getMonth = date.getMonth();
+    const getDay = date.getDay();
+    const dayOfTheWeekStringValue = DAYOFTHEWEEK[getDay];
+    const monthStringValue = MONTH[getMonth];
 
-        const dateValue: DateInfoSimulator = {
-            month: monthStringValue,
-            date: getDate,
-            dayOfTheWeek: dayOfTheWeekStringValue,
-            year: date.getFullYear()
-        }
+    const dateValue: DateInfoSimulator = {
+      month: monthStringValue,
+      date: getDate,
+      dayOfTheWeek: dayOfTheWeekStringValue,
+      year: date.getFullYear()
+    };
 
-        return dateValue;
-    }
-    
-    getCalendarDateString(dateObject: DateInfoSimulator): string {
-        return `${dateObject.dayOfTheWeek}, ${dateObject.month} ${dateObject.date}`
-    }
+    return dateValue;
+  }
 
-    getCurrentYearForTheDate(date: Date): number {
-        return date.getFullYear();
-    }
- 
-    calculateTheDateXNumberOfMonthsFromTheGivenDate(date: Date, numberOfMonths: number): Date {
-        let newDate = new Date(date);
-        newDate.setMonth(date.getMonth() + numberOfMonths);
+  getCalendarDateString(dateObject: DateInfoSimulator): string {
+    return `${dateObject.dayOfTheWeek}, ${dateObject.month} ${dateObject.date}`;
+  }
 
-        // const dayNewDate = newDate.getDay();
-        // const currentDay = date.getDay();
+  getCurrentYearForTheDate(date: Date): number {
+    return date.getFullYear();
+  }
 
-        // if(dayNewDate > currentDay) {
-        //     newDate.setDate(newDate.getDate() - (dayNewDate - currentDay));
-        // }
-        return newDate;
-    }
+  calculateTheDateXNumberOfMonthsFromTheGivenDate(date: Date, numberOfMonths: number): Date {
+    let newDate = new Date(date);
+    newDate.setMonth(date.getMonth() + numberOfMonths);
+
+    return newDate;
+  }
 }

@@ -1,5 +1,5 @@
 export class Actions {
-    async launchApp() {
-        await driver.launchApp();
-    }
+  async launchApp() {
+    await driver.launchApp();
+  }
 }

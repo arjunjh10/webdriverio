@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "yarn eslint --max-warnings 0 . --ext .ts,.tsx",
-    "test": "./node_modules/.bin/rimraf allure-results && wdio ./config/ios.conf.ts",
+    "pretty": "yarn eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "test": "yarn build && ./node_modules/.bin/rimraf allure-results && wdio ./config/ios.conf.ts",
     "report": "./node_modules/.bin/allure generate allure-results --clean && allure open"
   },
   "dependencies": {
