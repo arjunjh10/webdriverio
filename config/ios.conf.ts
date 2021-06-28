@@ -1,4 +1,9 @@
 import { config as wdioConfig} from "./wdio.conf";
+import type { messages } from '@cucumber/messages';
+import {ITestCaseHookParameter} from '@cucumber/cucumber/lib/support_code_library_builder/types';
+import type { Frameworks } from '@wdio/types';
+const { addAttachment } = require("@wdio/allure-reporter").default;
+const wdio_allure_ts = require("wdio-allure-ts");
 
 wdioConfig.capabilities = [
     {
@@ -36,5 +41,19 @@ wdioConfig.services = (wdioConfig.services ? wdioConfig.services : []).concat([
 
     ],
 ]);
+
+wdioConfig.afterStep = async function(step: messages.Pickle.IPickleStep, scenario: messages.IPickle, result: Frameworks.PickleResult) {
+    if(result.error) {
+        await driver.takeScreenshot();
+    }
+    addAttachment("Page HTML source", `${await driver.getPageSource()}`);
+};
+
+wdioConfig.afterScenario = async function (test: ITestCaseHookParameter) {
+    if (test.result?.status == 1) {
+        wdio_allure_ts.Reporter.closeStep();
+        return;
+    }
+};
 
 export const config = wdioConfig;

@@ -41,7 +41,11 @@ export const config: WebdriverIO.Config = {
     // Default request retries count
     connectionRetryCount: 3,
     framework: 'cucumber',
-    reporters: ['spec'],
+    reporters: [['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
     cucumberOpts: {
         // <boolean> show full backtrace for errors
         backtrace: false,
@@ -82,6 +86,6 @@ export const config: WebdriverIO.Config = {
         // <boolean> add cucumber tags to feature or scenario name
         tagsInTitle: false,
         // <number> timeout for step definitions
-        timeout: 1000000,
+        timeout: 90000,
     },
 };
