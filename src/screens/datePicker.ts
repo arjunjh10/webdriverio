@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import AppScreen from './appScreen';
+import AppScreen from './application';
 import { DAYOFTHEWEEK, MERIDIANTIME, MONTH } from '../support/constants';
 export class DatePicker extends AppScreen {
   constructor() {

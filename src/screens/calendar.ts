@@ -1,4 +1,4 @@
-import AppScreen from './appScreen';
+import AppScreen from './application';
 export default class CalendarScreen extends AppScreen {
   constructor() {
     super('~MonthViewContainerView');

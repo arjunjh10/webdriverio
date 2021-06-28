@@ -1,4 +1,4 @@
-import AppScreen from './appScreen';
+import AppScreen from './application';
 import { DatePicker } from './datePicker';
 import { Utils } from '../support/utils';
 let datePicker = new DatePicker();

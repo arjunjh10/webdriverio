@@ -1,5 +1,5 @@
 import { FREQUENCY } from '../support/constants';
-import AppScreen from './appScreen';
+import AppScreen from './application';
 export class RepeatEvent extends AppScreen {
   constructor() {
     super('-ios predicate string:name == "Repeat" AND type == "XCUIElementTypeNavigationBar"');

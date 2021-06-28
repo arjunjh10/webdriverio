@@ -1,4 +1,4 @@
-import AppScreen from './appScreen';
+import AppScreen from './application';
 import { MERIDIANTIME } from '../support/constants';
 export default class EventsScreen extends AppScreen {
   constructor() {

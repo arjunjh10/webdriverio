@@ -11,7 +11,7 @@ import { RepeatEvent } from '../screens/repeatEvent';
 import { EndRepeatEvent } from '../screens/endRepeatEvent';
 import { DatePicker } from '../screens/datePicker';
 import { TestExampleTable, EventAssertionTable } from '../support/cucumberTables';
-import AppScreen from '../screens/appScreen';
+import AppScreen from '../screens/application';
 
 let calendarScreen: CalendarScreen;
 let eventsScreen: EventsScreen;
