@@ -73,7 +73,7 @@ export const config: WebdriverIO.Config = {
         require: [
             './src/steps/*.ts'
         ],
-        scenarioLevelReporter: false,
+        scenarioLevelReporter: true,
         order: 'defined',
         // <string> specify a custom snippet syntax
         snippetSyntax: undefined,

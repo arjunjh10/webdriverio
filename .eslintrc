@@ -1,0 +1,10 @@
+{
+    "plugins": ["webdriverio"],
+    "env": {
+      "webdriverio/wdio": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2015
+    }
+  }

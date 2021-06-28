@@ -1,18 +1,34 @@
 {
-    "compilerOptions": {
-      "outDir": "./.tsbuild/",
-      "sourceMap": false,
-      "target": "es2019",
-      "module": "commonjs",
-      "removeComments": true,
-      "noImplicitAny": true,
-      "strictPropertyInitialization": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "strictNullChecks": true,
-      "types": [
-        "node",
-        "webdriverio/async",
-        "@wdio/cucumber-framework"
-      ]
-    }
-  }
+  "compilerOptions": {
+    "outDir": "typescript",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strictPropertyInitialization": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": true,
+    "types": [
+      "node",
+      "webdriverio/async",
+      "@wdio/cucumber-framework"
+    ],
+    "typeRoots": [ "./node_modules/@types" ],
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "config/*.ts",
+    "src/support/**/*",
+    "src/screen/**/*",
+    "src/steps/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "typescript"
+  ]
+}
