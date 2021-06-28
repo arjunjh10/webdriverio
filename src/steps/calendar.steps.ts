@@ -117,8 +117,6 @@ Then(/^A new event should be created successfully for:$/, async function (data: 
     const eventElement = await $(`-ios predicate string:label == "${label}"`);
     expect(await eventElement.isDisplayed()).to.equal(true);
 
-    await calendarDayView.navigateBack();
-
     const startDate: Date = new Date(`${scenarioContext.startDateText} ${scenarioContext.nextFridayInfo.year}`);
     const endDate: Date = new Date(`${scenarioContext.endDateText} ${scenarioContext.endDateInfo.year}`);
 
@@ -130,4 +128,10 @@ Then(/^A new event should be created successfully for:$/, async function (data: 
         }
     }
 
+    for(let j = 0; j < allFriDayDatesToBeCheckedForTheEvent.length; j++) {
+        const fridayLabelElement = await $(`~${allFriDayDatesToBeCheckedForTheEvent[j]}`);
+        expect(await fridayLabelElement.isDisplayed()).to.equal(true);
+        expect(await eventElement.isDisplayed()).to.equal(true);
+        await calendarDayView.swipe({x: 354, y: 132}, {x: 39, y: 132});
+    }
  });
