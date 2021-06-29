@@ -42,10 +42,11 @@ export const config: WebdriverIO.Config = {
   connectionRetryCount: 3,
   framework: 'cucumber',
   reporters: [['allure', {
-    outputDir: 'allure-results',
-    disableWebdriverStepsReporting: true,
+    outputDir: 'Reports/allure-results',
+    disableWebdriverStepsReporting: false,
     disableWebdriverScreenshotsReporting: false,
-  }]],
+    useCucumberStepReporter: true
+  }],'spec'],
   cucumberOpts: {
     // <boolean> show full backtrace for errors
     backtrace: false,
@@ -73,7 +74,7 @@ export const config: WebdriverIO.Config = {
     require: [
       './src/steps/*.ts'
     ],
-    scenarioLevelReporter: true,
+    scenarioLevelReporter: false,
     order: 'defined',
     // <string> specify a custom snippet syntax
     snippetSyntax: undefined,

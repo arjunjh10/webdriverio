@@ -1,3 +1,8 @@
+/**
+ * Class that runs in the scenario lifecycle to ensure passing of info
+ * between the step files and also within the file.
+ */
+
 export class ScenarioContext {
   private static instance: ScenarioContext;
   private static instantiating = false;

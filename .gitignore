@@ -3,3 +3,4 @@ logs
 allure-report
 allure-results
 typescript
+Reports/*

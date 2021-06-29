@@ -45,4 +45,16 @@ export class Utils {
 
     return newDate;
   }
+
+  getDateForTheDayOfTheWeekBetweenTwoDates(startDate: Date, endDate: Date, dayOfTheWeek: DAYOFTHEWEEK): Array<string> {
+    let allFridayDatesToBeCheckedForTheEvent: string[] = [];
+    for (let i = startDate; i <= endDate; i.setDate(i.getDate() + 1)) {
+      if (i.getDay() == dayOfTheWeek) {
+        const values = this.getSimulatorCalendarDateString(i);
+        allFridayDatesToBeCheckedForTheEvent.push(this.getCalendarDateString(values));
+      }
+    }
+
+    return allFridayDatesToBeCheckedForTheEvent;
+  }
 }
