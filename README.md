@@ -13,6 +13,10 @@ Breakdown includes:
 3) steps - cucumber step definitions
 4) support - support or helper code for automation
 
+ScenarioContext  : 
+It's kinda like Specflow's scenarioContext but not quite. I have for now only ensured a basic implementation to share data.
+
+
 To Run: 
 ========
 1) yarn install - to install the dependencies
