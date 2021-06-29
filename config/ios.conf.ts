@@ -38,7 +38,6 @@ wdioConfig.services = (wdioConfig.services ? wdioConfig.services : []).concat([
         relaxedSecurity: true,
       },
     },
-
   ],
 ]);
 

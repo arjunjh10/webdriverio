@@ -1,14 +1,13 @@
-import { Given, When, Before, World, DataTable, Then } from '@cucumber/cucumber';
+import { Given, When, Before } from '@cucumber/cucumber';
 import CalendarScreen from '../screens/calendar';
 import { expect } from 'chai';
 import { Actions } from '../support/actions';
 import { Utils, DateInfoSimulator } from '../support/utils';
-import { DAYOFTHEWEEK, FREQUENCY, MERIDIANTIME } from '../support/constants';
+import { DAYOFTHEWEEK } from '../support/constants';
 import { ScenarioContext } from '../support/scenarioContext';
 import { RepeatEvent } from '../screens/repeatEvent';
 import { EndRepeatEvent } from '../screens/endRepeatEvent';
 import { DatePicker } from '../screens/datePicker';
-import { TestExampleTable } from '../support/cucumberTables';
 import DayView from '../screens/dayView';
 import NewEvents from '../screens/newEvents';
 
@@ -22,8 +21,7 @@ let actions: Actions;
 let utils: Utils;
 let scenarioContext: ScenarioContext;
 
-
-Before(function (this: World) {
+Before(function () {
   calendarScreen = new CalendarScreen();
   eventsScreen = new NewEvents();
   actions = new Actions();
@@ -32,7 +30,7 @@ Before(function (this: World) {
   repeatEvent = new RepeatEvent();
   endRepeatEvent = new EndRepeatEvent();
   datePicker = new DatePicker();
-  scenarioContext = new ScenarioContext(this);
+  scenarioContext = ScenarioContext.getInstance();
 });
 
 Given(/^I have launched the calendar$/, async function () {
@@ -67,70 +65,4 @@ When(/^I select the date for creating a recurring event$/, async function () {
   const addEventButtonOnTheCalendarDayView = await dayView.addButton;
   await addEventButtonOnTheCalendarDayView.click();
   await eventsScreen.waitForIsShown(true);
-});
-
-When(/^I create a new event with the following data:$/, async function (data: DataTable) {
-  const hashes = data.hashes();
-  const myData = hashes as TestExampleTable[];
-  const startTime = myData[0].startTime.split(' ');
-  const endTime = myData[0].endTime.split(' ');
-  const frequency = myData[0].frequency;
-  const eventTitleTextField = await eventsScreen.eventTitleTextField;
-  await eventTitleTextField.click();
-  await eventTitleTextField.setValue(myData[0].eventName);
-
-  const startDatePicker = await datePicker.startDatePickerField;
-  const endDatePicker = await datePicker.endsDatePickerField;
-  expect(await startDatePicker.isDisplayed()).to.equal(true);
-  expect(await endDatePicker.isDisplayed()).to.equal(true);
-
-  await datePicker.selectTime(startDatePicker,startTime[0], MERIDIANTIME[startTime[1]]);
-  await datePicker.selectTime(endDatePicker , endTime[0], MERIDIANTIME[endTime[1]]);
-
-
-  const repeatEventButton = await eventsScreen.repeatEvent;
-  await repeatEventButton.click();
-  await repeatEvent.waitForIsShown(true);
-
-  const repeatFrquencyElement = await repeatEvent.getRepeatFrequencyElement(FREQUENCY[frequency]);
-  await repeatFrquencyElement.click();
-  await eventsScreen.waitForIsShown(true);
-  const weeklyStatusElementOnEvent = await $(`~${frequency}`);
-  expect(await weeklyStatusElementOnEvent.isDisplayed()).to.equal(true);
-
-  const endDate: Date = new Date(`${scenarioContext.endDateText} ${scenarioContext.endDateInfo.year}`);
-  const endRepeatEventButton = await datePicker.endRepeatEvent;
-  await endRepeatEventButton.click();
-  await endRepeatEvent.waitForIsShown(true);
-
-  await endRepeatEvent.endRepeatEventOnDate(endDate);
-  const addEventButton = await eventsScreen.addButton;
-  await addEventButton.click();
-  await dayView.waitForIsShown(true);
-});
-
-Then(/^A new event should be created successfully for:$/, async function (data: DataTable) {
-  const hashes = data.hashes();
-  const myData = hashes as TestExampleTable[];
-  const label = `${myData[0].eventName}, from ${myData[0].startTime} to ${myData[0].endTime}`;
-  const eventElement = await $(`-ios predicate string:label == "${label}"`);
-  expect(await eventElement.isDisplayed()).to.equal(true);
-
-  const startDate: Date = new Date(`${scenarioContext.startDateText} ${scenarioContext.nextFridayInfo.year}`);
-  const endDate: Date = new Date(`${scenarioContext.endDateText} ${scenarioContext.endDateInfo.year}`);
-
-  let allFriDayDatesToBeCheckedForTheEvent = [];
-  for (let i = startDate; i <= endDate; i.setDate(i.getDate() + 1)) {
-    if (i.getDay() == DAYOFTHEWEEK.Friday) {
-      const values = utils.getSimulatorCalendarDateString(i);
-      allFriDayDatesToBeCheckedForTheEvent.push(utils.getCalendarDateString(values));
-    }
-  }
-
-  for (let j = 0; j < allFriDayDatesToBeCheckedForTheEvent.length; j++) {
-    const fridayLabelElement = await $(`~${allFriDayDatesToBeCheckedForTheEvent[j]}`);
-    expect(await fridayLabelElement.isDisplayed()).to.equal(true);
-    expect(await eventElement.isDisplayed()).to.equal(true);
-    await dayView.swipe({ x: 354, y: 132 }, { x: 39, y: 132 });
-  }
 });
