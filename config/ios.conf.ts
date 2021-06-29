@@ -44,4 +44,8 @@ wdioConfig.afterStep = async function (step: messages.Pickle.IPickleStep, scenar
   await driver.takeScreenshot();
 };
 
+wdioConfig.afterScenario = async function() {
+  await driver.closeApp();
+}
+
 export const config = wdioConfig;
